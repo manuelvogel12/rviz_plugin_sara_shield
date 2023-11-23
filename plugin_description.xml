@@ -1,0 +1,9 @@
+<library path="lib/librviz_plugin_sara_shield">
+  <class name="rviz_plugin_sara_shield/SaraShieldPanel"
+        type="rviz_plugin_sara_shield::SaraShieldPanel"
+        base_class_type="rviz::Panel">
+    <description>
+      A panel widget to display sara-shield info and send commands to the sara-shield.
+    </description>
+  </class>
+</library>

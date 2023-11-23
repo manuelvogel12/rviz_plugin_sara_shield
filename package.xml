@@ -1,0 +1,27 @@
+<package>
+  <name>rviz_plugin_sara_shield</name>
+  <version>0.1.0</version>
+  <description>
+     Plugin to send sara-shield commands and display the sara shield status
+  </description>
+  <maintainer email="ge87xig@mytum.de">Manuel Vogel</maintainer>
+  <license>BSD</license>
+
+  <author>Manuel Vogel</author>
+
+  <buildtool_depend>catkin</buildtool_depend>
+
+  <build_depend>qtbase5-dev</build_depend>
+  <build_depend>rviz</build_depend>
+  <build_depend>concert_msgs</build_depend>
+
+  <run_depend>libqt5-core</run_depend>
+  <run_depend>libqt5-gui</run_depend>
+  <run_depend>libqt5-widgets</run_depend>
+  <run_depend>rviz</run_depend>
+  <run_depend>concert_msgs</run_depend>
+
+  <export>
+      <rviz plugin="${prefix}/plugin_description.xml"/>
+  </export>
+</package>
