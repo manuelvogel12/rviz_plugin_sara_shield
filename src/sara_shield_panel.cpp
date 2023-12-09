@@ -54,7 +54,6 @@ SaraShieldPanel::SaraShieldPanel( QWidget* parent )
   QRadioButton* no_human_button = new QRadioButton("No Human in Scene");
   QRadioButton* force_safe_button = new QRadioButton("Force safe");
   QRadioButton* force_unsafe_button = new QRadioButton("Force unsafe");
-  force_unsafe_button->setEnabled(false); // not inmplemented yet
   QRadioButton* send_dummy_human_button = new QRadioButton("Send Dummy Human");
   non_exclusive_button_group->addButton(no_human_button);
   non_exclusive_button_group->addButton(force_safe_button);
@@ -90,7 +89,8 @@ SaraShieldPanel::SaraShieldPanel( QWidget* parent )
   //ROS pubs and subs
   goal_pub_ = nh_.advertise<std_msgs::Float32MultiArray>( "sara_shield/goal_joint_pos", 1 );
   no_human_in_scene_pub_ = nh_.advertise<std_msgs::Bool>( "sara_shield/humans_in_scene", 1 );
-  force_safe_pub_ = nh_.advertise<std_msgs::Bool>( "sara_shield/safe_flag", 1 );
+  force_safe_pub_ = nh_.advertise<std_msgs::Bool>( "sara_shield/force_safe", 1 );
+  force_unsafe_pub_ = nh_.advertise<std_msgs::Bool>( "sara_shield/force_unsafe", 1 );
   send_dummy_human_pub_ = nh_.advertise<std_msgs::Bool>( "sara_shield/send_dummy_meas", 1 );
 
   safe_flag_sub_ = nh_.subscribe("/sara_shield/is_safe", 100, & SaraShieldPanel::safeFlagCallback, this);
@@ -140,7 +140,9 @@ void SaraShieldPanel::forceSave(bool on){
 }
 
 void SaraShieldPanel::forceUnsave(bool on){
-  std::cout<<"NOT IMPLEMENTED YET"<<std::endl;
+  std_msgs::Bool msg;
+  msg.data=on;
+  force_unsafe_pub_.publish(msg);
 }
 
 void SaraShieldPanel::sendDummyHuman(bool on){

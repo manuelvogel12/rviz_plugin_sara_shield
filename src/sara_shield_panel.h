@@ -54,6 +54,7 @@ protected:
   ros::Publisher goal_pub_;
   ros::Publisher no_human_in_scene_pub_;
   ros::Publisher force_safe_pub_;
+  ros::Publisher force_unsafe_pub_;
   ros::Publisher send_dummy_human_pub_;
   ros::Subscriber safe_flag_sub_;
 
