@@ -5,6 +5,7 @@
 
 #include <rviz/panel.h>
 #include "std_msgs/Bool.h"
+#include "std_msgs/Float32MultiArray.h"
 
 class QLineEdit;
 class QLabel;
@@ -41,11 +42,14 @@ protected Q_SLOTS:
 
   void safeFlagCallback(const std_msgs::Bool & msg);
 
+  void currentPosCallback(const std_msgs::Float32MultiArray & msg);
+
 
   //protected member variables
 protected:
 
   std::vector<QLineEdit*> goal_line_edits_;
+  std::vector<QLabel*> current_joint_pos_;
   QLabel* safe_status_label_;
 
   QTimer* safe_flag_timer_;
@@ -57,6 +61,7 @@ protected:
   ros::Publisher force_unsafe_pub_;
   ros::Publisher send_dummy_human_pub_;
   ros::Subscriber safe_flag_sub_;
+  ros::Subscriber current_joint_pos_sub_;
 
   // The ROS node handle.
   ros::NodeHandle nh_;

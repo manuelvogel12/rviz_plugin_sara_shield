@@ -47,7 +47,19 @@ SaraShieldPanel::SaraShieldPanel( QWidget* parent )
   QPushButton* goal_push_button = new QPushButton("Send Goal Pos");
   goal_send_layout->addWidget( goal_push_button);
 
-  // Box #5: Various other buttons
+  // Box #5: Label for Current Joint Pos Text
+  QHBoxLayout* current_joint_pos_label_layout = new QHBoxLayout;
+  current_joint_pos_label_layout->addWidget( new QLabel( "Current Joint Pos:" ));
+
+  // Box #6: Labels for current poses
+  QHBoxLayout* current_joint_pos_layout = new QHBoxLayout;
+  for(int i = 0; i<6; i++){
+    QLabel* joint_pos = new QLabel("-");
+    current_joint_pos_.push_back(joint_pos);
+    current_joint_pos_layout->addWidget(joint_pos);
+  }
+
+  // Box #7: Various other buttons
   QHBoxLayout* addional_button_layout = new QHBoxLayout;
   QButtonGroup* non_exclusive_button_group = new QButtonGroup;
   non_exclusive_button_group->setExclusive(false);
@@ -71,6 +83,8 @@ SaraShieldPanel::SaraShieldPanel( QWidget* parent )
   layout->addLayout( goal_text_layout );
   layout->addLayout( goal_input_layout );
   layout->addLayout( goal_send_layout );
+  layout->addLayout( current_joint_pos_label_layout );
+  layout->addLayout( current_joint_pos_layout );
   layout->addLayout( addional_button_layout );
   setLayout( layout );
 
@@ -94,6 +108,7 @@ SaraShieldPanel::SaraShieldPanel( QWidget* parent )
   send_dummy_human_pub_ = nh_.advertise<std_msgs::Bool>( "sara_shield/send_dummy_meas", 1 );
 
   safe_flag_sub_ = nh_.subscribe("/sara_shield/is_safe", 100, & SaraShieldPanel::safeFlagCallback, this);
+  current_joint_pos_sub_ = nh_.subscribe("/sara_shield/current_joint_pos", 100, & SaraShieldPanel::currentPosCallback, this);
 }
 
 
@@ -107,6 +122,13 @@ void SaraShieldPanel::safeFlagCallback(const std_msgs::Bool & msg){
         safe_status_label_->setStyleSheet("border: 2px solid red;");
     }
     safe_flag_timer_->start(200);
+}
+
+void SaraShieldPanel::currentPosCallback(const std_msgs::Float32MultiArray& msg){
+  for(int i=0;i<6;i++){
+    QString formatted_number = QString::number(msg.data[i], 'f', 2);
+    current_joint_pos_[i]->setText(formatted_number);
+  }
 }
 
 
