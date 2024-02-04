@@ -35,8 +35,7 @@ SaraShieldPanel::SaraShieldPanel( QWidget* parent )
 
   // Box #3: Input Boxes for Goal Joint Pos
   QHBoxLayout* goal_input_layout = new QHBoxLayout;
-  int number_robot_joints = 6;
-  for(int i=0; i<number_robot_joints; i++){
+  for(int i=0; i<NUMBER_ROBOT_JOINTS; i++){
     QLineEdit* line_edit = new QLineEdit("0.0");
     goal_line_edits_.push_back(line_edit);
     goal_input_layout->addWidget( line_edit);
@@ -53,7 +52,7 @@ SaraShieldPanel::SaraShieldPanel( QWidget* parent )
 
   // Box #6: Labels for current poses
   QHBoxLayout* current_joint_pos_layout = new QHBoxLayout;
-  for(int i = 0; i<6; i++){
+  for(int i = 0; i<NUMBER_ROBOT_JOINTS; i++){
     QLabel* joint_pos = new QLabel("-");
     current_joint_pos_.push_back(joint_pos);
     current_joint_pos_layout->addWidget(joint_pos);
@@ -125,7 +124,7 @@ void SaraShieldPanel::safeFlagCallback(const std_msgs::Bool & msg){
 }
 
 void SaraShieldPanel::currentPosCallback(const std_msgs::Float32MultiArray& msg){
-  for(int i=0;i<6;i++){
+  for(int i=0; i<NUMBER_ROBOT_JOINTS; i++){
     QString formatted_number = QString::number(msg.data[i], 'f', 2);
     current_joint_pos_[i]->setText(formatted_number);
   }
