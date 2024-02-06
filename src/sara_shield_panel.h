@@ -49,7 +49,7 @@ protected Q_SLOTS:
 protected:
 
   // TODO: figure out a way to automatically determine the number of joints and update the GUI.
-  const int NUMBER_ROBOT_JOINTS = 6;
+  const int NUMBER_ROBOT_JOINTS = 7;
 
   std::vector<QLineEdit*> goal_line_edits_;
   std::vector<QLabel*> current_joint_pos_;
