@@ -35,8 +35,10 @@ SaraShieldPanel::SaraShieldPanel( QWidget* parent )
 
   // Box #3: Input Boxes for Goal Joint Pos
   QHBoxLayout* goal_input_layout = new QHBoxLayout;
+  double initValuesPanda[7] = {0, -M_PI_4, 0, -3 * M_PI_4, 0, M_PI_2, M_PI_4};
   for(int i=0; i<NUMBER_ROBOT_JOINTS; i++){
-    QLineEdit* line_edit = new QLineEdit("0.0");
+    QLineEdit* line_edit = new QLineEdit(QString::number(initValuesPanda[i]));
+    // QLineEdit* line_edit = new QLineEdit("0.0");
     goal_line_edits_.push_back(line_edit);
     goal_input_layout->addWidget( line_edit);
   }
