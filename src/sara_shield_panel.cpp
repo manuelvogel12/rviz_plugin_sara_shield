@@ -127,7 +127,11 @@ void SaraShieldPanel::currentPosCallback(const std_msgs::Float32MultiArray& msg)
   for(int i=0; i<NUMBER_ROBOT_JOINTS; i++){
     QString formatted_number = QString::number(msg.data[i], 'f', 2);
     current_joint_pos_[i]->setText(formatted_number);
+    if(!received_pos){
+      goal_line_edits_[i]->setText(formatted_number);
+    }
   }
+  received_pos = true;
 }
 
 
